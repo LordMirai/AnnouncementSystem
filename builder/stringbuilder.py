@@ -8,7 +8,7 @@ def vox(struct: str):
     for itm in str_arr:
         if itm == " " or itm == "":
             continue
-        filename = "sounds/" + itm + '.wav'
+        filename = "../sounds/" + itm + '.wav'
         try:
             obj = sa.WaveObject.from_wave_file(filename)
             play_obj = obj.play()
