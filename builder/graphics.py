@@ -1,6 +1,9 @@
 import tkinter as tk
+from threading import Thread
+
 import stringbuilder as sb
 from Globals import *
+from presets import *
 
 
 class GUI:
@@ -30,7 +33,14 @@ class GUI:
         self.include_period.set(False)
 
         self.root = root
-        self.populate_options()
+        # self.populate_options()
+
+        self.controlPanel = tk.Frame(root)
+        self.controlPanel.grid(row=1, column=0, columnspan=3, pady=20, padx=5)
+        self.controlPanel.active_row = 1
+        self.controlPanel.active_col = 0
+
+        self.call_chain = []
 
         self.populate_presets()
 
@@ -136,11 +146,11 @@ class GUI:
             pretty = pretty.replace("\n", " ")
             pretty = pretty.replace("  ", " ")
 
-        print(f"Pretty output: {pretty}")
+        print(f"Pretty output: \n{pretty}\n")
 
         parsed = sb.parse_full(strings)
-        print(f"parsed: {parsed}")
-        # sb.vox(parsed)
+        # print(f"parsed: {parsed}")
+        Thread(target=sb.vox, args=parsed).start()
 
     def load_preset(self, preset):
         self.announce_type.set(preset["annt"])

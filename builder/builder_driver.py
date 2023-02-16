@@ -1,6 +1,6 @@
 import os
 import stringbuilder as sb
-
+from graphics import GUI
 from Globals import *
 
 
@@ -34,8 +34,8 @@ def sound_check(inexistent_only=False):
 
 def drive_builder():
     sound_check(True)
-    # GUI()
-    sb.vox("order guard three five three pause repto lcz")
+    GUI()
+    # sb.vox("order guard three five three pause repto lcz")
     pass
 
 

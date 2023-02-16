@@ -3,8 +3,10 @@ from Globals import *
 
 
 def vox(struct: str):
+    struct = struct.replace(".","pause").replace(",","shortpause").replace("-", " ")
     print(f"Voicing structure '{struct}'")
-    str_arr = struct.replace("-", " ").split(" ")
+    str_arr = struct.split(" ")
+
     for itm in str_arr:
         if itm == " " or itm == "":
             continue

@@ -26,7 +26,7 @@ basic_number_dict = {
     60: "sixty",
     70: "seventy",
     80: "eighty",
-    90: "ninety"
+    90: "ninety",
 }
 
 announcement_types = {
@@ -142,33 +142,10 @@ preset_messages = {
     "We are here for you": "rem_wearehere",
 }
 
-config_presets = {
-    "Reset": {
-        "annt": "General Announcement",
-        "pm": "",
-        "per": False,
-        "st": "",
-        "sumod": "",
-        "num": "",
-        "order": "",
-        "tt": "",
-        "tmod": "",
-        "tnum": "",
-        "at": False,
-        "loc": ""
-    },
-    "Cont. Breach": {
-        "annt": "Emergency",
-        "pm": "SCP Containment Breach",
-        "per": True,
-        "st": "SCP",
-        "sumod": "",
-        "num": "^",
-        "order": "",
-        "tt": "",
-        "tmod": "",
-        "tnum": "^",
-        "at": True,
-        "loc": ""
+widget_types = {
+    "anntype": {
+        "type": "dropdown",
+        "label": "Announcement Type",
+        "options": announcement_types
     }
 }
