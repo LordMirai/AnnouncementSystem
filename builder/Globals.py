@@ -144,11 +144,12 @@ preset_messages = {
 
 
 def adder_callback(val, panel, label):
-    print("adder called back")
-    print(val, panel)
     panel.adder.destroy()
     label.destroy()
     from builder import presets
+
+    panel.active_col -= 1  # to counter the removal
+
     presets.add_to_panel(panel, adder_types[val])
     presets.make_adder(panel)
 
@@ -167,15 +168,32 @@ adder_types = {
 }
 
 widget_types: dict = {
-    "anntype": {
-        "type": "dropdown",
-        "label": "Announcement Type",
-        "options": announcement_types
-    },
     "adder": {
         "type": "adder",
         "label": "Add new",
         "options": adder_types,
         "command": adder_callback
+    },
+    "anntype": {
+        "type": "dropdown",
+        "label": "Announcement Type",
+        "options": announcement_types
+    },
+    "msg": {
+        "type": "dropdown",
+        "label": "Preset Message",
+        "options": preset_messages
+    },
+    ".": {
+        "type": "checkbox",
+        "label": "'.'"
+    },
+    ",": {
+        "type": "checkbox",
+        "label": "','"
+    },
+    "text": {
+        "type": "plaintext",
+        "label": "Text"
     }
 }

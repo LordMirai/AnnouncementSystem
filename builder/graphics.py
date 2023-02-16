@@ -1,8 +1,6 @@
-import tkinter as tk
 from threading import Thread
 
 import stringbuilder as sb
-from Globals import *
 from presets import *
 
 
@@ -10,29 +8,9 @@ class GUI:
     def __init__(self):
         root = tk.Tk()
         root.title("Builder GUI")
-        # root.geometry("600x600")
         root.bind("<Escape>", lambda _: root.destroy())
 
-        # self.announce_type = tk.StringVar(root)
-        # self.subj_type = tk.StringVar(root)
-        # self.subj_num = tk.StringVar(root)
-        # self.subj_num_modif = tk.StringVar(root)
-        # self.tg_num_modif = tk.StringVar(root)
-        # self.order = tk.StringVar(root)
-        # self.tg_type = tk.StringVar(root)
-        # self.location = tk.StringVar(root)
-        # self.preset_msg = tk.StringVar(root)
-        # self.tg_num = tk.StringVar(root)
-        # self.say_at = tk.BooleanVar(root)
-        # self.include_period = tk.BooleanVar(root)
-
-        # var setters
-        # self.announce_type.set("General Announcement")
-        # self.say_at.set(False)
-        # self.include_period.set(False)
-
         self.root = root
-        # self.populate_options()
 
         self.controlPanel = tk.Frame(root)
         self.controlPanel.parent = self
@@ -124,41 +102,26 @@ class GUI:
         vox_button.grid(row=12, column=0, columnspan=10, ipadx=20, pady=5)
 
     def vox_cb(self):
-        strings = [
-            str(self.announce_type.get()),
-            str(self.subj_type.get()),
-            str(self.subj_num.get()),
-            str(self.subj_num_modif.get()),
-            str(self.tg_num_modif.get()),
-            str(self.order.get()),
-            str(self.tg_type.get()),
-            str(self.location.get()),
-            str(self.preset_msg.get()),
-            str(self.tg_num.get()),
-            '1' if self.say_at.get() else '0',
-            '1' if self.include_period.get() else '0'
-        ]
+        strings = []
 
-        pretty = f"{self.announce_type.get()}: {self.preset_msg.get()}{'.' if self.include_period.get() else ''} " \
-                 f"{self.subj_type.get()} " \
-                 f"{self.subj_num_modif.get() + '-' if self.subj_num_modif.get() != '' else ''}" \
-                 f"{self.subj_num.get().replace('-', '') if self.subj_num.get() == '-' else self.subj_num.get()} " \
-                 f"{self.order.get()} {self.tg_type.get()} " \
-                 f"{self.tg_num_modif.get() + '-' if self.tg_num_modif.get() != '' else ''}" \
-                 f"{self.tg_num.get()} {'at' if self.say_at.get() else ''} {self.location.get()}"
-
-        while "  " in pretty:
-            pretty = pretty.replace("\n", " ")
-            pretty = pretty.replace("  ", " ")
-
-        print(f"Pretty output: \n{pretty}\n")
+        for i in self.call_chain:
+            var = i["var"]
+            name = i["name"]
+            widget_data = widget_types[name]
+            val = var.get()
+            print("call chain: ", name,widget_data)
+            if type(var) == tk.StringVar:
+                if widget_data["type"] == "plaintext":
+                    strings.append(val)
+                elif widget_data["type"] == "dropdown":
+                    strings.append(widget_data["options"][val])
+            elif type(var) == tk.BooleanVar:
+                strings.append('1' if val else '0')
 
         parsed = sb.parse_full(strings)
-        # print(f"parsed: {parsed}")
-        Thread(target=sb.vox, args=parsed).start()
+        Thread(target=sb.vox, args=(parsed,)).start()
 
     def load_preset(self, preset):
-        print(f"load_preset[{preset}]")
         reset(self.controlPanel)
         for i in config_presets[preset]:
             add_to_panel(self.controlPanel, i['type'], i['value'])
@@ -167,8 +130,7 @@ class GUI:
         rowstart = 14
 
         for k, v in config_presets.items():
-            print(f"Populate {k},{v}")
             btn_command = lambda preset=k: self.load_preset(preset)
             tk.Button(self.root, text=k, command=btn_command).grid(row=rowstart, column=0, padx=10,
-                                                                                   pady=5)
+                                                                   pady=5)
             rowstart += 1

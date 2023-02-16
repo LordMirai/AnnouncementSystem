@@ -3,7 +3,7 @@ from Globals import *
 
 
 def vox(struct: str):
-    struct = struct.replace(".","pause").replace(",","shortpause").replace("-", " ")
+    struct = struct.replace(".", "pause").replace(",", "shortpause").replace("-", " ")
     print(f"Voicing structure '{struct}'")
     str_arr = struct.split(" ")
 
@@ -66,36 +66,8 @@ def build_number(number) -> str:
     return " ".join([x for x in (thousands, hundreds, tens, digit) if x != ""]).strip()
 
 
-def parse_full(inp: list | str) -> str:
-    at = inp[0]
-    sub_type = inp[1]
-    sub_num = inp[2]
-    sub_num_modif = inp[3]
-    tg_num_modif = inp[4]
-    order = inp[5]
-    tg_type = inp[6]
-    location = inp[7]
-    preset_msg = inp[8]
-    tg_num = inp[9]
-    say_at = True if inp[10] == '1' else False
-    inc_period = True if inp[11] == '1' else False
-
-    outputs = [
-        announcement_types[at],  # General Announcement -> genann
-        preset_messages[preset_msg],
-        '.' if inc_period else '',
-        target_types[sub_type],  # D-Class -> dclass
-        sub_num_modif.lower(),
-        build_number(sub_num),
-        orders[order],
-        target_types[tg_type],
-        tg_num_modif.lower(),
-        build_number(tg_num),
-        'at' if say_at else '',
-        locations[location],
-    ]
-
-    out_str = " ".join(outputs)
+def parse_full(inp) -> str:
+    out_str = " ".join(inp)
     out_str = out_str.replace("--", " dash ")
     out_str = out_str.replace("-", " ")
 
