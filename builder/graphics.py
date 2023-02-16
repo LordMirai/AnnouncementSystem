@@ -7,40 +7,45 @@ from presets import *
 
 
 class GUI:
-    # TODO: replace input1/2/3... with suggestive names. Do the same with outputs were needed
     def __init__(self):
         root = tk.Tk()
         root.title("Builder GUI")
         # root.geometry("600x600")
         root.bind("<Escape>", lambda _: root.destroy())
 
-        self.announce_type = tk.StringVar(root)
-        self.subj_type = tk.StringVar(root)
-        self.subj_num = tk.StringVar(root)
-        self.subj_num_modif = tk.StringVar(root)
-        self.tg_num_modif = tk.StringVar(root)
-        self.order = tk.StringVar(root)
-        self.tg_type = tk.StringVar(root)
-        self.location = tk.StringVar(root)
-        self.preset_msg = tk.StringVar(root)
-        self.tg_num = tk.StringVar(root)
-        self.say_at = tk.BooleanVar(root)
-        self.include_period = tk.BooleanVar(root)
+        # self.announce_type = tk.StringVar(root)
+        # self.subj_type = tk.StringVar(root)
+        # self.subj_num = tk.StringVar(root)
+        # self.subj_num_modif = tk.StringVar(root)
+        # self.tg_num_modif = tk.StringVar(root)
+        # self.order = tk.StringVar(root)
+        # self.tg_type = tk.StringVar(root)
+        # self.location = tk.StringVar(root)
+        # self.preset_msg = tk.StringVar(root)
+        # self.tg_num = tk.StringVar(root)
+        # self.say_at = tk.BooleanVar(root)
+        # self.include_period = tk.BooleanVar(root)
 
         # var setters
-        self.announce_type.set("General Announcement")
-        self.say_at.set(False)
-        self.include_period.set(False)
+        # self.announce_type.set("General Announcement")
+        # self.say_at.set(False)
+        # self.include_period.set(False)
 
         self.root = root
         # self.populate_options()
 
         self.controlPanel = tk.Frame(root)
+        self.controlPanel.parent = self
         self.controlPanel.grid(row=1, column=0, columnspan=3, pady=20, padx=5)
         self.controlPanel.active_row = 1
         self.controlPanel.active_col = 0
 
         self.call_chain = []
+
+        make_adder(self.controlPanel)
+
+        vox_button = tk.Button(root, text="Vox", command=self.vox_cb)
+        vox_button.grid(row=12, column=0, columnspan=10, ipadx=20, pady=5)
 
         self.populate_presets()
 
@@ -153,22 +158,17 @@ class GUI:
         Thread(target=sb.vox, args=parsed).start()
 
     def load_preset(self, preset):
-        self.announce_type.set(preset["annt"])
-        self.preset_msg.set(preset["pm"])
-        self.include_period.set(preset["per"])
-        self.subj_type.set(preset["st"])
-        self.subj_num_modif.set(preset["sumod"])
-        self.subj_num.set(preset["num"])
-        self.order.set(preset['order'])
-        self.tg_type.set(preset['tt'])
-        self.tg_num_modif.set(preset['tmod'])
-        self.tg_num.set(preset['tnum'])
-        self.say_at.set(preset['at'])
-        self.location.set(preset['loc'])
+        print(f"load_preset[{preset}]")
+        reset(self.controlPanel)
+        for i in config_presets[preset]:
+            add_to_panel(self.controlPanel, i['type'], i['value'])
 
     def populate_presets(self):
         rowstart = 14
 
         for k, v in config_presets.items():
-            tk.Button(self.root, text=k, command=lambda: self.load_preset(v)).grid(row=rowstart, column=0)
+            print(f"Populate {k},{v}")
+            btn_command = lambda preset=k: self.load_preset(preset)
+            tk.Button(self.root, text=k, command=btn_command).grid(row=rowstart, column=0, padx=10,
+                                                                                   pady=5)
             rowstart += 1

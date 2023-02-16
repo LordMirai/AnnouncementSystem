@@ -142,10 +142,40 @@ preset_messages = {
     "We are here for you": "rem_wearehere",
 }
 
-widget_types = {
+
+def adder_callback(val, panel, label):
+    print("adder called back")
+    print(val, panel)
+    panel.adder.destroy()
+    label.destroy()
+    from builder import presets
+    presets.add_to_panel(panel, adder_types[val])
+    presets.make_adder(panel)
+
+
+adder_types = {
+    "Announcement Type": "anntype",
+    "Message": "msg",
+    "Order": 'order',
+    "Number": 'num',
+    "Person": 'person',
+    "Period": '.',
+    "Comma": ",",
+    "Conjunction": "conj",
+    "Modifier": "mod",
+    "Location": "loc"
+}
+
+widget_types: dict = {
     "anntype": {
         "type": "dropdown",
         "label": "Announcement Type",
         "options": announcement_types
+    },
+    "adder": {
+        "type": "adder",
+        "label": "Add new",
+        "options": adder_types,
+        "command": adder_callback
     }
 }
