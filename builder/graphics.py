@@ -109,14 +109,22 @@ class GUI:
             name = i["name"]
             widget_data = widget_types[name]
             val = var.get()
-            print("call chain: ", name,widget_data)
+            print("call chain: ", name, widget_data)
             if type(var) == tk.StringVar:
                 if widget_data["type"] == "plaintext":
-                    strings.append(val)
+                    if name == "num":
+                        strings.append(sb.build_number(val))
+                    else:
+                        strings.append(val)
                 elif widget_data["type"] == "dropdown":
                     strings.append(widget_data["options"][val])
             elif type(var) == tk.BooleanVar:
-                strings.append('1' if val else '0')
+                if name == ".":
+                    if val:
+                        strings.append('pause')
+                elif name == ",":
+                    if val:
+                        strings.append('shortpause')
 
         parsed = sb.parse_full(strings)
         Thread(target=sb.vox, args=(parsed,)).start()

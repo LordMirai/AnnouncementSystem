@@ -6,7 +6,8 @@ from Globals import *
 
 def sound_check(inexistent_only=False):
     all_sounds = {*announcement_types.values(), *target_types.values(), *orders.values(), *locations.values(),
-                  *preset_messages.values(), *basic_number_dict.values()}
+                  *preset_messages.values(), *basic_number_dict.values(), *conjunctions.values(), *events.values(),
+                  *flavor.values()}
     for i in numeric_modifiers:
         all_sounds.add(i.lower())
     all_sounds.remove("")
@@ -21,11 +22,6 @@ def sound_check(inexistent_only=False):
             if not inexistent_only:
                 print(f"'{i}' exists!")
         else:
-            # path = f"../sounds/numbers/{i}.wav"
-            # if os.path.exists(path):
-            #     if not inexistent_only:
-            #         print(f"'{i}' exists in /numbers!")
-            # else:
             print(f"'{i}' not found")
             missing += 1
 

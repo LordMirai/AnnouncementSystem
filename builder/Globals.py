@@ -35,7 +35,6 @@ announcement_types = {
     "Reminder": "reminder",
     "Alert": "alert",
     "Notice": "notice",
-    "Site Anomaly": "sian",
     "Order": "order",
     "Imperative Order": "imporder",
     "Attention": "attention",
@@ -56,9 +55,10 @@ target_types = {
     "D-Class": "dclass",
     "Agent": "agent",
     "Guard": "guard",
-    "Scientist": "scientist",
+    "Mobile Task Force": "mtf",
     "Engineer": "engineer",
     "Specialist": "specialist",
+    "Tech Expert": "techie",
     "Medic": "medic",
     "Civilian": "civilian",
     "Intruder": "intruder",
@@ -86,12 +86,14 @@ orders = {
     "Present to": "presto",
     "Report at": "repat",
     "Report to": "repto",
+    "Report position": "reppos",
     "Status Report": "strep",
     "Secure": "secure",
     "Secure and Hold": "sechold",
     "Contain": "contain",
     "Terminate": "terminate",
     "Take point": "takepoint",
+    "Go to": "goto",
     "Disperse": "disperse",
     "Disperse and Hold": "dishold",
     "Shakedown": "shakedown",
@@ -104,6 +106,7 @@ orders = {
     "Escort": "escort",
     "Escort to": "escortto",
     "Escort to and hold": "escorttohold",
+
 }
 
 locations = {
@@ -126,6 +129,7 @@ locations = {
 preset_messages = {
     "": "",
     "SCP Containment Breach": "contbreach",
+    "Site Anomaly": "sian",
     "Unit Down": "undown",
     "MTF has arrived": "mtfarrived",
     "MTF has left": "mtfleft",
@@ -140,6 +144,39 @@ preset_messages = {
     "Keep doors closed": "rem_closedoors",
     "Report broken doors or objects": "rem_brokendoors",
     "We are here for you": "rem_wearehere",
+}
+
+conjunctions = {
+    "": "",
+    "and": "and",
+    "or": "or",
+    "not": "not",
+    "for": "for",
+    "at": "at",
+    "to": "to",
+    "with": "with",
+    "between": "between",
+    "is": "is",
+    "by": "by",
+    "designated": "designated",
+    "has": "has",
+
+}
+
+events = {
+    "": "",
+    "has been contained": "beencontained",
+    "needed at": "needat",
+    "requested at": "reqat",
+    "detected": "detected"
+}
+
+flavor = {
+    "": "",
+    "immediately": "immediately",
+    "carefully": "carefully",
+    "when done": "wdone",
+    "if possible": "ifpos"
 }
 
 
@@ -158,13 +195,16 @@ adder_types = {
     "Announcement Type": "anntype",
     "Message": "msg",
     "Order": 'order',
+    "Text": 'text',
     "Number": 'num',
-    "Person": 'person',
+    "Entity": 'ent',
     "Period": '.',
     "Comma": ",",
     "Conjunction": "conj",
     "Modifier": "mod",
-    "Location": "loc"
+    "Location": "loc",
+    "Event": "ev",
+    "Flavor": "flav"
 }
 
 widget_types: dict = {
@@ -195,5 +235,44 @@ widget_types: dict = {
     "text": {
         "type": "plaintext",
         "label": "Text"
-    }
+    },
+    "ent": {
+        "type": "dropdown",
+        "label": "Entity/Person",
+        "options": target_types
+    },
+    "num": {
+        "type": "plaintext",
+        "label": "Number (^ = ad lit.)"
+    },
+    "order": {
+        "type": "dropdown",
+        "label": "Orders",
+        "options": orders
+    },
+    "loc": {
+        "type": "dropdown",
+        "label": "Location",
+        "options": locations
+    },
+    "mod": {
+        "type": "dropdown",
+        "label": "Modifier",
+        "options": numeric_modifiers
+    },
+    "conj": {
+        "type": "dropdown",
+        "label": "Conjunction",
+        "options": conjunctions
+    },
+    "ev": {
+        "type": "dropdown",
+        "label": "Event",
+        "options": events
+    },
+    "flav": {
+        "type": "dropdown",
+        "label": "Flavor text",
+        "options": flavor
+    },
 }

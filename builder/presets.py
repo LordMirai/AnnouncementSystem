@@ -44,6 +44,24 @@ def add_to_panel(panel: tk.Frame, widget_type: str, value=None):
         wg = tk.OptionMenu(panel, temp_str_var, *wg_data["options"],
                            command=lambda _: adder_callback(temp_str_var.get(), panel, wg_label))
         panel.adder = wg
+    elif wg_data["type"] == "checkbox":
+        temp_bool_var = tk.BooleanVar()
+        wg = tk.Checkbutton(panel, variable=temp_bool_var)
+
+        panel.parent.call_chain.append({
+            "var": temp_bool_var,
+            "name": widget_type
+        })
+    elif wg_data["type"] == "plaintext":
+        temp_str_var = tk.StringVar()
+        if value is not None:
+            temp_str_var.set(value)
+        panel.parent.call_chain.append({
+            "var": temp_str_var,
+            "name": widget_type
+        })
+        wg = tk.Entry(panel, textvariable=temp_str_var)
+
     if wg is not None:
         wg.grid(row=panel.active_row + 1, column=panel.active_col)
 
