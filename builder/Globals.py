@@ -53,8 +53,10 @@ target_types = {
     "Unit": "unit",
     "Researcher": "rsch",
     "D-Class": "dclass",
+    "D-": "d",
     "Agent": "agent",
     "Guard": "guard",
+    "GenSec": "gensec",
     "Mobile Task Force": "mtf",
     "Engineer": "engineer",
     "Specialist": "specialist",
@@ -62,6 +64,7 @@ target_types = {
     "Medic": "medic",
     "Civilian": "civilian",
     "Intruder": "intruder",
+    "MTF E-11 NTF": "ntf_full",  # "Mobile Task Force Epsilon-11, designated Nine Tailed Fox"
 }
 
 numeric_modifiers = [
@@ -80,6 +83,36 @@ numeric_modifiers = [
     "Sigma",
     "Omega",
 ]
+
+letters = {
+    '',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z'
+}
 
 orders = {
     "": "",
@@ -106,7 +139,7 @@ orders = {
     "Escort": "escort",
     "Escort to": "escortto",
     "Escort to and hold": "escorttohold",
-
+    "Retrieve": "retrieve"
 }
 
 locations = {
@@ -123,6 +156,9 @@ locations = {
     "Entrance Zone Checkpoint": "entrzcp",
     "Personnel Wing": "pwing",
     "Non-Specialized SCPs": "nonspecscp",
+    "Medical Bay": "medbay",
+    "Science Lab": "scilab",
+    "Inanimate Object Storage": "ios"
 
 }
 
@@ -168,7 +204,9 @@ events = {
     "has been contained": "beencontained",
     "needed at": "needat",
     "requested at": "reqat",
-    "detected": "detected"
+    "detected": "detected",
+    "has entered the facility": "hasentered",
+    "has left the facility": "hasleft",
 }
 
 flavor = {
@@ -176,7 +214,18 @@ flavor = {
     "immediately": "immediately",
     "carefully": "carefully",
     "when done": "wdone",
-    "if possible": "ifpos"
+    "if possible": "ifpos",
+    "please": "please"
+}
+
+objects = {
+    "": "",
+    "Object": "obj",
+    "Item": "item",
+    "Weapon": "wpn",
+    "Keycard": "card",
+    "SCP Containment beam": "contbeam",
+    "Vial, Beaker or Flask": "vial"
 }
 
 
@@ -197,6 +246,7 @@ adder_types = {
     "Order": 'order',
     "Text": 'text',
     "Number": 'num',
+    "Letter": 'lett',
     "Entity": 'ent',
     "Period": '.',
     "Comma": ",",
@@ -274,5 +324,15 @@ widget_types: dict = {
         "type": "dropdown",
         "label": "Flavor text",
         "options": flavor
+    },
+    "lett": {
+        "type": "dropdown",
+        "label": "Letter",
+        "options": letters
+    },
+    "obj": {
+        "type": "dropdown",
+        "label": "Object",
+        "options": objects
     },
 }

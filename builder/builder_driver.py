@@ -7,7 +7,7 @@ from Globals import *
 def sound_check(inexistent_only=False):
     all_sounds = {*announcement_types.values(), *target_types.values(), *orders.values(), *locations.values(),
                   *preset_messages.values(), *basic_number_dict.values(), *conjunctions.values(), *events.values(),
-                  *flavor.values()}
+                  *flavor.values(), *letters, *numeric_modifiers}
     for i in numeric_modifiers:
         all_sounds.add(i.lower())
     all_sounds.remove("")
